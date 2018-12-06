@@ -1,0 +1,25 @@
+﻿
+@{
+    Layout = null; //para deshabilitar el template
+    ViewData["Title"] = "MyView";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>iTrebolSoft - Amazon</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css" />
+</head>
+<body>
+
+    <div class="text-center">
+        <h2>Vista de MyView</h2>
+
+        @ViewBag.Saludos amiguitos!!
+        <p>Bienvenido a AMAZON, tu tienda virtual de libros <br />
+        Los libros no estan muriendo solo se estan volviendo digitales</p>
+        @* Tag helper, que nos ayuda a redireccionar  *@
+        <a class="btn btn-danger" asp-action="RegBookForm">Registrar un libro amiguito</a> 
+
+    </div>
+</body>
+</html>

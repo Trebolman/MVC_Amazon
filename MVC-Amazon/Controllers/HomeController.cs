@@ -10,34 +10,51 @@ namespace MVC_Amazon.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        [HttpGet]
+        public ViewResult Index()
+        {
+
+            //return "Hola nariz de bola";
+            int hour = DateTime.Now.Hour;
+            ViewBag.Saludos = hour < 12 ? "Buenos dias" : "Buenas tardes";
+            return View("MyView");
+        }
+
+        [HttpGet]
+        public ViewResult RegBookForm()
         {
             return View();
         }
 
-        public IActionResult About()
+        [HttpPost]
+        // Se agrega un 
+        public ViewResult RegBookForm(BookResponse bookResponse)
         {
-            ViewData["Message"] = "Your application description page.";
+            // TODO: store reponse from visitor
+            //Repository.AddResponse(bookResponse);
+            //return View("Thanks", bookResponse); // el nombre del formulario es "gracias" que hara de base de datos temporal
 
-            return View();
+            // Agregamos una validacion
+            if (ModelState.IsValid)
+            {
+                Repository.AddResponse(bookResponse);
+                return View("Thanks", bookResponse);
+            }
+            else
+            {
+                // Hay un error de validación y retornamos una vista en blanco.
+                return View();
+            }
         }
 
-        public IActionResult Contact()
+        [HttpGet]
+        public ViewResult ListResponses()
         {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
+            //return View(Repository.Responses.Where(b => b.Price > 100)); Libros caros
+            //return View(Repository.Responses.Where(b => b.Price < 100)); Libros baratos
+            // cuando no se dice que vista, entonces por defecto busca la vista listResponses.cshtml
+            return View(Repository.Responses);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }
