@@ -26,14 +26,17 @@
             @foreach (MVC_Amazon.Models.BookResponse book in Model)
             {
                 <tr>
-                    <td>@book.ISBN</td>
-                    <td>@book.Title</td>
-                    <td>@book.Author</td>
-                    <td>@book.Price</td>
-                    <td>@book.NroPages</td>
+                    @* El signo de interrogacion dice que si es nulo, el codigo siguiente no se ejecute *@
+                    <td>@(book?.ISBN?? "ISB no establecido")</td>
+                    <td>@(book?.Title?? "ISB no establecido")</td>
+                    <td>@(book?.Author?? "Titulo no establecido")</td>
+                    <td>@(book?.Price?? 0)</td>
+                    <td>@(book?.NroPages?? 0)</td>
                 </tr>
             }
         </tbody>
     </table>
+
+    <h1>@($"Precio total de los libros es de: {ViewBag.TotalPrice:c2}")</h1>
 </body>
 </html>

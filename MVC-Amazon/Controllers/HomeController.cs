@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MVC_Amazon.Models;
+using MVC_Amazon.Models.Extensions;
 
 namespace MVC_Amazon.Controllers
 {
@@ -17,7 +18,8 @@ namespace MVC_Amazon.Controllers
             //return "Hola nariz de bola";
             int hour = DateTime.Now.Hour;
             ViewBag.Saludos = hour < 12 ? "Buenos dias" : "Buenas tardes";
-            return View("MyView");
+            Repository.FillBooks();
+            return View("Index");
         }
 
         [HttpGet]
@@ -53,6 +55,7 @@ namespace MVC_Amazon.Controllers
             //return View(Repository.Responses.Where(b => b.Price > 100)); Libros caros
             //return View(Repository.Responses.Where(b => b.Price < 100)); Libros baratos
             // cuando no se dice que vista, entonces por defecto busca la vista listResponses.cshtml
+            ViewBag.TotalPrice = Repository.TotalPrice();
             return View(Repository.Responses);
         }
 
